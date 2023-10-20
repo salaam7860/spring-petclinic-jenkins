@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+    option {
+        timeout(time:1, unit:'HOURS')
+        retry(2)
+    }
+    triggers {
+        cron (* * * * *)
+    }
+    stages {
+        stage ('SourceCode') {
+            steps {
+                //git branch: 'main', url: 'https://github.com/salaam7860/spring-petclinic-jenkins.git'
+                git branch: 'main', url: 'https://github.com/salaam7860/spring-petclinic-jenkins.git'
+            }
+        }
+        stage ('Build_The_Code') {
+            steps {
+                sh script: 'mvn clean package'
+            }
+
+        }
+        stage ('Archive and Reporting') {
+            steps {
+                //
+                junit testResults : 'target/surefire-reports/*.xml'
+            }
+            steps {
+                archiveArtifacts artifacts: '**/*.jar', followSymlinks: false
+            }
+        }
+    }
+    post {
+        success{
+            echo "Project has been successfully created"
+        }
+        unsuccessful {
+            echo 'Project has been unsuccessful'
+        }
+    }
+
+}
