@@ -15,7 +15,7 @@ pipeline {
     }
     stage('Build_The_Code') {
       steps {
-        sh script: 'mvn clean package'
+        maven 'clean package'
       }
     }
     stage('Archive and Reporting') {
