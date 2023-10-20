@@ -5,7 +5,7 @@ pipeline {
         retry(2)
     }
     triggers {
-        cron (* * * * *)
+        cron (0 * * * *)
     }
     stages {
         stage ('SourceCode') {
