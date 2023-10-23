@@ -1,3 +1,4 @@
+/* groovylint-disable-next-line CompileStatic */
 pipeline {
   agent any
   options {
@@ -5,6 +6,7 @@ pipeline {
     retry(2)
   }
   triggers {
+    // space after the brackets 
     cron('0 * * * *')
   }
   stages {
